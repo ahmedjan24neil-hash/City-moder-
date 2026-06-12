@@ -59,6 +59,15 @@
 </head>
 <body class="bg-desert-950 text-desert-100 font-sans overflow-x-hidden">
 
+    <!-- Google Sign-In Initialization with updated Client ID -->
+    <div id="g_id_onload"
+         data-client_id="864383819950-15bb7tgeg5fmfaob1vps9gmu4ec71u1k.apps.googleusercontent.com"
+         data-context="signin"
+         data-ux_mode="popup"
+         data-callback="onGoogleSignIn"
+         data-auto_prompt="false">
+    </div>
+
     <!-- Floating Background Particles -->
     <div class="fixed inset-0 pointer-events-none z-0">
         <div class="dust-particle w-2 h-2" style="top: 25%; left: 15%; animation-delay: 0s;"></div>
@@ -378,27 +387,27 @@
                 <ul class="space-y-2.5 text-sm text-desert-400">
                     <li class="flex justify-between border-b border-desert-900/60 pb-1.5">
                         <span>Monday:</span> 
-                        <span class="text-green-400">08:00 AM - 08:00 PM</span>
+                        <span class="text-green-400 font-bold">08:00 AM - 08:00 PM</span>
                     </li>
                     <li class="flex justify-between border-b border-desert-900/60 pb-1.5">
                         <span>Tuesday:</span> 
-                        <span class="text-green-400">08:00 AM - 08:00 PM</span>
+                        <span class="text-green-400 font-bold">08:00 AM - 08:00 PM</span>
                     </li>
                     <li class="flex justify-between border-b border-desert-900/60 pb-1.5">
                         <span>Wednesday:</span> 
-                        <span class="text-green-400">08:00 AM - 08:00 PM</span>
+                        <span class="text-green-400 font-bold">08:00 AM - 08:00 PM</span>
                     </li>
                     <li class="flex justify-between border-b border-desert-900/60 pb-1.5">
                         <span>Thursday:</span> 
-                        <span class="text-green-400">08:00 AM - 08:00 PM</span>
+                        <span class="text-green-400 font-bold">08:00 AM - 08:00 PM</span>
                     </li>
                     <li class="flex justify-between border-b border-desert-900/60 pb-1.5">
                         <span>Friday:</span> 
-                        <span class="text-green-400">08:00 AM - 08:00 PM</span>
+                        <span class="text-green-400 font-bold">08:00 AM - 08:00 PM</span>
                     </li>
                     <li class="flex justify-between border-b border-desert-900/60 pb-1.5">
                         <span>Saturday:</span> 
-                        <span class="text-green-400">08:00 AM - 08:00 PM</span>
+                        <span class="text-green-400 font-bold">08:00 AM - 08:00 PM</span>
                     </li>
                     <li class="flex justify-between border-b border-desert-900/60 pb-1.5">
                         <span class="text-red-400 font-bold">Sunday:</span> 
@@ -433,7 +442,7 @@
                 <h3 class="text-2xl font-bold text-white">Google Sign-In Required</h3>
                 <p class="text-sm text-desert-300 leading-relaxed">Apni selected package ki booking aur verification mukammal karne ke liye Google Account ke sath credentials verify karein.</p>
                 
-                <!-- Google Button Container inside Modal (Rendered Programmatically to prevent sizing/timing issues) -->
+                <!-- Google Button Container inside Modal -->
                 <div class="flex justify-center" id="modal-signin-container">
                     <!-- Loaded programmatically -->
                 </div>
@@ -482,7 +491,7 @@
         // Programmatic configuration to guarantee Google Sign-In button rendering
         function initializeGoogleIdentity() {
             google.accounts.id.initialize({
-                client_id: "267412316314-fs7nivuee4l3u2rm2bhl2t91l5b8vrok.apps.googleusercontent.com",
+                client_id: "864383819950-15bb7tgeg5fmfaob1vps9gmu4ec71u1k.apps.googleusercontent.com",
                 callback: onGoogleSignIn,
                 auto_select: false
             });
@@ -522,7 +531,6 @@
                 localStorage.setItem('city_motors_user', JSON.stringify(user));
                 updateAuthUI(user);
                 
-                // Show confirmation screen instantly if modal was already visible
                 const modal = document.getElementById('booking-modal');
                 if (!modal.classList.contains('hidden')) {
                     showSuccessState(user);
@@ -630,7 +638,6 @@
             const grid = document.getElementById('massive-signs-grid');
             grid.innerHTML = "";
 
-            // Active category state switching
             const categories = ['All', 'Regulatory', 'Warning', 'Informational'];
             categories.forEach(cat => {
                 const btn = document.getElementById(`filter-${cat}`);
@@ -643,12 +650,11 @@
                 }
             });
 
-            // Filter signs logic
             const filtered = category === 'All' ? signsDatabase : signsDatabase.filter(s => s.type === category);
             
             filtered.forEach(sign => {
                 grid.innerHTML += `
-                    <div class="bg-desert-950 border border-desert-800 rounded-xl p-4 text-center hover:border-gold-500 transition duration-300">
+                    <div class="bg-desert-950 border border-desert-800 rounded-xl p-4 text-center hover:border-gold-500 transition 300">
                         <div class="text-3xl mb-2"><i class="${sign.icon}"></i></div>
                         <div class="text-xs font-bold text-white">${sign.name}</div>
                         <div class="text-[10px] text-desert-500 mt-1 uppercase">${sign.type}</div>
@@ -657,7 +663,6 @@
             });
         }
 
-        // Initialize grid on load with all signs
         window.addEventListener('DOMContentLoaded', () => {
             filterSigns('All');
         });
